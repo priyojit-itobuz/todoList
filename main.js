@@ -6,13 +6,12 @@ const allButton = document.getElementById("allButton");
 const activeButton = document.getElementById("activeButton");
 const clearButton = document.getElementById("clearButton");
 
-const tasks = [];
+const tasks = JSON.parse(localStorage.getItem("todoItems")) || [];
 const completedTask = [];
 
 function displayTasks(filteredTasks = tasks) {
   todoList.innerHTML = "";
-
-  filteredTasks.forEach((task, index) => {
+   filteredTasks.forEach((task, index) => {
     const listItem = document.createElement("li");
     const taskText = document.createElement("span");
     taskText.textContent = task.text;
@@ -58,6 +57,7 @@ function addTask() {
       } else {
         tasks.unshift({ text: task, completed: false, count: 0 });
       }
+      localStorage.setItem("todoItems", JSON.stringify(tasks));
       inputBox.value = "";
       displayTasks();
     } else {
@@ -70,6 +70,7 @@ function addTask() {
 
 function deleteTask(index) {
   tasks.splice(index, 1);
+  localStorage.setItem("todoItems", JSON.stringify(tasks));
   displayTasks();
 }
 
@@ -81,6 +82,7 @@ function completeTask(index) {
     tasks[index].completed = false;
   }
   completedTask.push(tasks[index].text);
+  localStorage.setItem("todoItems", JSON.stringify(tasks));
   displayTasks();
 }
 
@@ -107,8 +109,13 @@ function displayClearTasks() {
       i++;
     }
   }
+  localStorage.setItem("todoItems", JSON.stringify(tasks));
   displayTasks();
 }
+
+displayTasks();
+
+
 
 addButton.addEventListener("click", addTask);
 completedButton.addEventListener("click", displayCompletedTasks);
