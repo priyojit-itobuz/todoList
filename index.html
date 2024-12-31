@@ -12,23 +12,18 @@
 
 <body>
     <div class="d-flex flex-column justify-content-center align-items-center mt-5">
-        <h1 class="heading">Todo List</h1>
+        <h1 class="heading mb-3">Todo List</h1>
         <div class="mb-3">
             <input type="text" id="taskInput" placeholder="Enter Task">
-            <button id="addItem" onclick="addItem()">Add</button>
+            <button id="addItem" class="addTaskButton">Add</button>
         </div>
-        <div>
-            <button type="button" class="btn btn-primary">All</button>
-            <button type="button" class="btn btn-primary">Active</button>
-            <button type="button" class="btn btn-primary">Completed</button>
-            <button type="button" class="btn btn-primary">Clear Completed</button>
+        <div class="mb-3 d-flex flex-wrap justify-content-center align-items-center gap-2">
+            <button type="button" class="btn btn-primary filters" id="allButton">All</button>
+            <button type="button" class="btn btn-primary filters" id="activeButton">Active</button>
+            <button type="button" class="btn btn-primary filters" id="completedButton">Completed</button>
+            <button type="button" class="btn btn-danger filters" id="clearButton">Clear Completed</button>
         </div>
-
-
-        <div id="item">
-
-        </div>
-
+        <ul id="todoList" class="todo-list"></ul>
     </div>
     <script src="main.js"></script>
 </body>

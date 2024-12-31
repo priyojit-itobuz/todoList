@@ -1,54 +1,123 @@
-const inputBox = document.getElementById("inputBox")
+const inputBox = document.getElementById("taskInput");
+const addButton = document.getElementById("addItem");
+const todoList = document.getElementById("todoList");
+const completedButton = document.getElementById("completedButton");
+const allButton = document.getElementById("allButton");
+const activeButton = document.getElementById("activeButton");
+const clearButton = document.getElementById("clearButton");
 
-// const todoItem = document.getElementById("todoItem")
-// const totalItem = document.getElementById("totalItem")
-// const deleteImage = document.getElementById("deleteImage")
-// const tickImage = document.getElementById("tickImage")
-// const todoImage = document.getElementById("todoImage")
-const list = []
+const tasks = [];
+const completedTask = [];
 
-function displayItem() {
-    const item = document.getElementById("item")
-    item.innerHTML = ""
-    for (let i = 0; i < list.length;i++) {
-        let listItem = document.createElement('p');
-        let deleteImage = document.createElement('img');
-        let tickImage = document.createElement('img');
-        listItem.innerHTML = list[i];
-        item.appendChild(listItem)
-        deleteImage.setAttribute("src","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7CF7xUhpZ8JC2jBNOWkIPdhi2R4N9cIVxJA&s")
-        deleteImage.setAttribute("style","height:30px ; width:30px")
-        tickImage.setAttribute("src","https://cdn-icons-png.flaticon.com/512/665/665939.png")
-        tickImage.setAttribute("style","height:30px ; width:30px")
-        item.setAttribute("style","d-flex justify-content-between align-content-center w-25")
-        item.appendChild(tickImage)
-        item.appendChild(deleteImage)
+function displayTasks(filteredTasks = tasks) {
+  todoList.innerHTML = "";
+
+  filteredTasks.forEach((task, index) => {
+    const listItem = document.createElement("li");
+    const taskText = document.createElement("span");
+    taskText.textContent = task.text;
+
+    if (task.completed && task.count % 2 != 0) {
+      taskText.style.textDecoration = "line-through";
+    } else {
+      taskText.style.textDecoration = "none";
     }
+
+    const deleteButton = document.createElement("img");
+    deleteButton.setAttribute(
+      "src",
+      "/assets/deleteIcon.png"
+    );
+    deleteButton.addEventListener("click", () => deleteTask(index));
+
+    const tickButton = document.createElement("img");
+    tickButton.setAttribute(
+      "src",
+      "/assets/tickIcon.png"
+    );
+    tickButton.addEventListener("click", () => completeTask(index));
+
+    listItem.appendChild(taskText);
+    listItem.appendChild(tickButton);
+    listItem.appendChild(deleteButton);
+    todoList.appendChild(listItem);
+  });
 }
 
-function addItem() {
-    const val = inputBox.value
-    list.unshift(val);
-    console.log(list);
-    displayItem();
+function addTask() {
+  const task = inputBox.value.trim();
+  if (task !== "") {
+    const found = tasks.some((el) => el.text === task);
+    if (!found) {
+      if (task.length > 25) {
+        tasks.unshift({
+          text: task.substring(0, 22) + "...",
+          completed: false,
+          count: 0,
+        });
+      } else {
+        tasks.unshift({ text: task, completed: false, count: 0 });
+      }
+      inputBox.value = "";
+      displayTasks();
+    } else {
+      alert("Same Task! Please enter different task");
+    }
+  } else {
+    alert("Please enter a task!");
+  }
 }
 
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  displayTasks();
+}
 
+function completeTask(index) {
+  tasks[index].count += 1;
+  if (tasks[index].count % 2 != 0) {
+    tasks[index].completed = true;
+  } else {
+    tasks[index].completed = false;
+  }
+  completedTask.push(tasks[index].text);
+  displayTasks();
+}
 
-  // listItem.setAttribute("style","font-size:30px;")
-        // let todoImage = document.createElement("div")
-        // let deleteImage = document.createElement('img');
-        // let tickImage = document.createElement('img');
-        // item.setAttribute("class","d-flex justify-content-between align-content-center w-25 mt-4")
-        // item.setAttribute("style", "background-color: aqua; padding:10px;")
-        // todoImage.setAttribute("style","d-flex justify-content-between align-content-center")
-        // deleteImage.setAttribute("src","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7CF7xUhpZ8JC2jBNOWkIPdhi2R4N9cIVxJA&s")
-        // deleteImage.setAttribute("style","height:30px ; width:30px")
-        // tickImage.setAttribute("src","https://cdn-icons-png.flaticon.com/512/665/665939.png")
-        // tickImage.setAttribute("style","height:30px ; width:30px")
+function displayCompletedTasks() {
+  const filteredTasks = tasks.filter((task) => task.completed === true);
+  displayTasks(filteredTasks);
+}
 
-        // listItem.innerText = list[i];
-        // item.appendChild(listItem);
-        // item.appendChild(deleteImage)
-        // item.appendChild(tickImage)
-        // totalItem.appendChild(item)
+function displayAllTasks() {
+  displayTasks();
+}
+
+function displayActiveTasks() {
+  const filteredTasks = tasks.filter((task) => task.completed === false);
+  displayTasks(filteredTasks);
+}
+
+function displayClearTasks() {
+  let i = 0;
+  while (i < tasks.length) {
+    if (tasks[i].completed === true) {
+      tasks.splice(i, 1);
+    } else {
+      i++;
+    }
+  }
+  displayTasks();
+}
+
+addButton.addEventListener("click", addTask);
+completedButton.addEventListener("click", displayCompletedTasks);
+allButton.addEventListener("click", displayAllTasks);
+activeButton.addEventListener("click", displayActiveTasks);
+clearButton.addEventListener("click", displayClearTasks);
+
+inputBox.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    addTask();
+  }
+});
