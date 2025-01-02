@@ -115,8 +115,7 @@ function editTask(task, listItem, taskText)
   const saveEdit = () => {
     const newValue = editInput.value.trim();
     if (newValue) {
-      const found = tasks.some((el) => el.text === newValue);
-      console.log(found);
+      const found = tasks.some((element) => element.text === newValue);
       if(!found)
       {
         task.text = newValue.length > 25 ? newValue.substring(0, 22) + "..." : newValue;
