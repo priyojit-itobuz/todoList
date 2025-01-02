@@ -44,7 +44,6 @@ function displayTasks(filteredTasks = tasks) {
   });
 }
 
-
 function addTask() {
   const task = inputBox.value.trim();
   if (task !== "") {
