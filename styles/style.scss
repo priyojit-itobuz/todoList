@@ -1,31 +1,36 @@
 .heading {
     color: green;
+
     @media (min-width:768px) {
         font-size: 30px;
     }
+
     @media (min-width:1024px) {
         font-size: 36px;
     }
+
     @media (min-width:1440px) {
         font-size: 48px;
     }
 }
 
-.todo-list {
+.todoListContainer {
     width: 290px;
     margin: 0 auto;
     padding: 20px;
     border-radius: 5px;
-    max-height:250px; 
-    overflow:auto;
+    max-height: 250px;
+    overflow: auto;
+    list-style: none;
 
     @media (min-width:768px) {
         width: 370px;
-        max-height:350px; 
+        max-height: 350px;
     }
+
     @media (min-width:1440px) {
         width: 415px;
-        max-height:450px; 
+        max-height: 470px;
     }
 }
 
@@ -35,7 +40,7 @@
     }
 }
 
-input {
+.enterTodo {
     width: 200px;
     padding: 5px;
     margin-right: 5px;
@@ -43,6 +48,7 @@ input {
     @media (min-width:768px) {
         width: 300px;
     }
+
     @media (min-width:1440px) {
         width: 400px;
         padding: 2%;
@@ -56,35 +62,32 @@ input {
     background-color: black;
     color: #fff;
     border: none;
+
     @media(min-width: 1024px) {
         width: 70px;
         padding: 8px;
     }
+
     @media (min-width:1440px) {
         padding: 12px;
     }
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-    text-align: left;
-}
-
-li {
+.listSection {
     display: flex;
-    justify-content: space-between; 
-    align-items: center; 
+    justify-content: space-between;
+    align-items: center;
     padding: 5px 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
-    width: 250px; 
+    width: 250px;
+
     @media (min-width:768px) {
         width: 330px;
     }
+
     @media (min-width:1440px) {
         width: 375px;
         padding: 3%;
@@ -92,22 +95,21 @@ li {
     }
 }
 
-li span {
-    flex-grow: 1; 
+.listContent {
+    flex-grow: 1;
 }
 
-li img {
+.icons {
     cursor: pointer;
-    height: 30px; 
-    width: 30px;  
-    margin-left: 10px; 
+    height: 30px;
+    width: 30px;
+    margin-left: 10px;
 }
 
-.edit-input {
+.editInput {
     width: 90%;
     padding: 5px;
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 5px;
-  }
-  
+}

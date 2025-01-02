@@ -13,8 +13,10 @@ function displayTasks(filteredTasks = tasks) {
   todoList.innerHTML = "";
   filteredTasks.forEach((task, index) => {
     const listItem = document.createElement("li");
+
     const taskText = document.createElement("span");
     taskText.textContent = task.text;
+
 
     if (task.completed && task.count % 2 != 0) {
       taskText.style.textDecoration = "line-through";
@@ -22,16 +24,22 @@ function displayTasks(filteredTasks = tasks) {
       taskText.style.textDecoration = "none";
     }
 
+    listItem.setAttribute("class", "listSection");
+    taskText.setAttribute("class", "listContent")
+
     const deleteButton = document.createElement("img");
     deleteButton.setAttribute("src", "/assets/deleteIcon.png");
+    deleteButton.setAttribute("class", "icons");
     deleteButton.addEventListener("click", () => deleteTask(index));
 
     const tickButton = document.createElement("img");
     tickButton.setAttribute("src", "/assets/tickIcon.png");
+    tickButton.setAttribute("class", "icons");
     tickButton.addEventListener("click", () => completeTask(index));
 
     const editButton = document.createElement("img");
     editButton.setAttribute("src", "/assets/editIcon.png");
+    editButton.setAttribute("class", "icons");
     editButton.addEventListener("click", () =>
       editTask(task, listItem, taskText,index)
     );
@@ -47,7 +55,7 @@ function displayTasks(filteredTasks = tasks) {
 function addTask() {
   const task = inputBox.value.trim();
   if (task !== "") {
-    const found = tasks.some((el) => el.text === task);
+    const found = tasks.some((element) => element.text === task);
     if (!found) {
       if (task.length > 25) {
         tasks.unshift({
@@ -107,7 +115,7 @@ function editTask(task, listItem, taskText)
 {
   const editInput = document.createElement("input");
   editInput.type = "text";
-  editInput.classList.add("edit-input");
+  editInput.classList.add("editInput");
   editInput.value = task.text;
 
   listItem.replaceChild(editInput, taskText);

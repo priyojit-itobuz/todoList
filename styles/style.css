@@ -17,24 +17,25 @@
   }
 }
 
-.todo-list {
+.todoListContainer {
   width: 290px;
   margin: 0 auto;
   padding: 20px;
   border-radius: 5px;
   max-height: 250px;
   overflow: auto;
+  list-style: none;
 }
 @media (min-width: 768px) {
-  .todo-list {
+  .todoListContainer {
     width: 370px;
     max-height: 350px;
   }
 }
 @media (min-width: 1440px) {
-  .todo-list {
+  .todoListContainer {
     width: 415px;
-    max-height: 450px;
+    max-height: 470px;
   }
 }
 
@@ -44,18 +45,18 @@
   }
 }
 
-input {
+.enterTodo {
   width: 200px;
   padding: 5px;
   margin-right: 5px;
 }
 @media (min-width: 768px) {
-  input {
+  .enterTodo {
     width: 300px;
   }
 }
 @media (min-width: 1440px) {
-  input {
+  .enterTodo {
     width: 400px;
     padding: 2%;
   }
@@ -81,14 +82,7 @@ input {
   }
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
-  text-align: left;
-}
-
-li {
+.listSection {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -100,30 +94,30 @@ li {
   width: 250px;
 }
 @media (min-width: 768px) {
-  li {
+  .listSection {
     width: 330px;
   }
 }
 @media (min-width: 1440px) {
-  li {
+  .listSection {
     width: 375px;
     padding: 3%;
     font-size: 20px;
   }
 }
 
-li span {
+.listContent {
   flex-grow: 1;
 }
 
-li img {
+.icons {
   cursor: pointer;
   height: 30px;
   width: 30px;
   margin-left: 10px;
 }
 
-.edit-input {
+.editInput {
   width: 90%;
   padding: 5px;
   font-size: 16px;
