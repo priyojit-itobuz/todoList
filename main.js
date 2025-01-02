@@ -11,7 +11,7 @@ const completedTask = [];
 
 function displayTasks(filteredTasks = tasks) {
   todoList.innerHTML = "";
-   filteredTasks.forEach((task, index) => {
+  filteredTasks.forEach((task, index) => {
     const listItem = document.createElement("li");
     const taskText = document.createElement("span");
     taskText.textContent = task.text;
@@ -23,25 +23,27 @@ function displayTasks(filteredTasks = tasks) {
     }
 
     const deleteButton = document.createElement("img");
-    deleteButton.setAttribute(
-      "src",
-      "/assets/deleteIcon.png"
-    );
+    deleteButton.setAttribute("src", "/assets/deleteIcon.png");
     deleteButton.addEventListener("click", () => deleteTask(index));
 
     const tickButton = document.createElement("img");
-    tickButton.setAttribute(
-      "src",
-      "/assets/tickIcon.png"
-    );
+    tickButton.setAttribute("src", "/assets/tickIcon.png");
     tickButton.addEventListener("click", () => completeTask(index));
+
+    const editButton = document.createElement("img");
+    editButton.setAttribute("src", "/assets/editIcon.png");
+    editButton.addEventListener("click", () =>
+      editTask(task, listItem, taskText,index)
+    );
 
     listItem.appendChild(taskText);
     listItem.appendChild(tickButton);
     listItem.appendChild(deleteButton);
+    listItem.appendChild(editButton);
     todoList.appendChild(listItem);
   });
 }
+
 
 function addTask() {
   const task = inputBox.value.trim();
@@ -60,7 +62,9 @@ function addTask() {
       localStorage.setItem("todoItems", JSON.stringify(tasks));
       inputBox.value = "";
       displayTasks();
-    } else {
+    } 
+    else 
+    {
       alert("Same Task! Please enter different task");
     }
   } else {
@@ -100,6 +104,37 @@ function displayActiveTasks() {
   displayTasks(filteredTasks);
 }
 
+function editTask(task, listItem, taskText) 
+{
+  const editInput = document.createElement("input");
+  editInput.type = "text";
+  editInput.classList.add("edit-input");
+  editInput.value = task.text;
+
+  listItem.replaceChild(editInput, taskText);
+
+  const saveEdit = () => {
+    const newValue = editInput.value.trim();
+    if (newValue) {
+      const found = tasks.some((el) => el.text === newValue);
+      console.log(found);
+      if(!found)
+      {
+        task.text = newValue.length > 25 ? newValue.substring(0, 22) + "..." : newValue;
+      }
+      else
+      {
+        alert("Same Task");
+      }
+      localStorage.setItem("todoItems", JSON.stringify(tasks));
+      displayTasks();
+    } else {
+      alert("Task cannot be empty!");
+    }
+  };
+  editInput.addEventListener("blur", saveEdit);
+}
+
 function displayClearTasks() {
   let i = 0;
   while (i < tasks.length) {
@@ -114,8 +149,6 @@ function displayClearTasks() {
 }
 
 displayTasks();
-
-
 
 addButton.addEventListener("click", addTask);
 completedButton.addEventListener("click", displayCompletedTasks);
